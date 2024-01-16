@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    
+    justify-content: center;
+    align-items: center;
+    
+    
+  }
+
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  nav ul li {
+    margin-right: 20px;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-button a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #4caf50;
+    border-radius: 5px;
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+    justify-content: center;
+    
+  }
+  
+  .side-image {
+    max-width: 100%;
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  .registration-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    background-image: url('THEME_CAR_TRANSPORTATION-shutterstock-portfolio_677345539-scaled-1 (2).jpg'); /* Replace 'path/to/your/background-image.jpg' with the actual path to your image */
+    background-size: cover;
+    backdrop-filter: blur(20px);
+    
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    background-color: transparent;
+    
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  

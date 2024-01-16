@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi Reservation</title>
+  <link rel="stylesheet" href="reserve.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">City Taxi</div>
+        <nav>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="reserve.html"  class="active">Ride</a></li>
+            <li><a href="index.html">Driver</a></li>
+            <li><a href="home.html">Features</a></li>
+            <li><a href="home.html">About</a></li>
+            <li><a href="home.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="login-button">
+          <a href="login.html">Login</a>
+        </div>
+        <br>
+        
+      </header>
+      <img src="careers_taxidriver_cover-1024x324.jpg" alt="Cover Photo">
+      <br><br><br><br>
+
+
+<div class="container">
+  <div class="reservation-form">
+    <h2>Taxi Reservation</h2>
+    <form action="reserve.php" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="pickup-location">Pickup Location:</label>
+      <input type="text" id="pickup-location" name="pickupLocation" required>
+
+      <label for="dropoff-location">Dropoff Location:</label>
+      <input type="text" id="dropoff-location" name="dropoffLocation" required>
+
+      <label for="pickup-date">Pickup Date:</label>
+      <input type="date" id="pickup-date" name="pickupDate" required>
+
+      <label for="pickup-time">Pickup Time:</label>
+      <input type="time" id="pickup-time" name="pickupTime" required>
+
+      <label for="trip-type">Trip Type:</label>
+      <input type="radio" id="one-way" name="tripType" value="one-way" checked>
+      <label for="one-way">One Way</label>
+      <input type="radio" id="return-trip" name="tripType" value="return-trip">
+      <label for="return-trip">Return Trip</label>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="mobile">Mobile Number:</label>
+      <input type="tel" id="mobile" name="mobile" required>
+
+      <button type="submit">Book</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

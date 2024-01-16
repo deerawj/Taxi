@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Taxi Registration</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+    <header>
+        <div class="logo">City Taxi</div>
+        <nav>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="reserve.html">Ride</a></li>
+            <li><a href="index.html" class="active">Driver</a></li>
+            <li><a href="home.html">Features</a></li>
+            <li><a href="home.html">About</a></li>
+            <li><a href="home.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="login-button">
+          <a href="login.html">Login</a>
+        </div>
+      </header>
+  <div class="registration-form">
+    <h2>City Taxi Registration</h2>
+    <form action="register.php" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="mobile">Mobile Number:</label>
+      <input type="text" id="mobile" name="mobile" required>
+
+      <label for="vehicle-type">Vehicle Type:</label>
+      <input type="text" id="vehicle-type" name="vehicleType" required>
+
+      <label for="make">Make:</label>
+      <input type="text" id="make" name="make" required>
+
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" required>
+
+      <label for="employment-type">Employment Type:</label>
+      <select id="employment-type" name="employmentType" required>
+        <option value="full-time">Full Time</option>
+        <option value="part-time">Part Time</option>
+      </select>
+
+      <label for="preferred-district">Preferred District:</label>
+      <input type="text" id="preferred-district" name="preferredDistrict" required>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+
+</body>
+</html>
