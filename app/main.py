@@ -1,5 +1,5 @@
 from sanic import Sanic, SanicException
-from sanic.response import text
+from sanic.response import text, file
 from sanic_ext import Extend
 import gzip
 
@@ -38,6 +38,10 @@ async def manage_exception(request, exception):
 @app.ext.template("main.html")
 async def index(request):
    return {"name": "World"}
+
+@app.get("/style.css")
+async def style(request):
+   return await file("style.css")
 
 if __name__ == "__main__":
    app.run(host="127.0.0.1", port=3000, debug=True)
