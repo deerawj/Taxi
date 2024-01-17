@@ -18,5 +18,6 @@ google doc for colab [here](https://docs.google.com/document/d/16MatLfGRMtWJo0qk
 - Finally, you can run `python3.12 app/main.py` to run the app
 
 ## Styling
+- If you don't want to use tailwind you can just add the styles inline (ie. using `<style>` tags in the html)
 - If you just want to add some global styles edit the `input.css` file and not the `style.css` file and then run the command below.
-- Also are working with `tailwind`; you want to start tailwind using `tailwind --input input.css --output style.css --watch --content templates/*.html` (This should be run in another terminal from the project root since it runs continuasly and updates the style.css each time an edit is made)
+- If you are working with `tailwind`; you want to start tailwind using `tailwind --input input.css --output style.css --watch --content templates/*.html` (This should be run in another terminal from the project root since it runs continuasly and updates the style.css each time an edit is made)
