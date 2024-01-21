@@ -31,8 +31,11 @@ async def compress_request(request):
 async def manage_exception(request, exception):
    # exception.args = ("There is something wrong",)
    # message, = exception.args
-   status_code = exception.status_code
-   return text(f"Ops! There was an {status_code} Error", status=status_code)
+   try:
+      status_code = exception.status_code
+      return text(f"Ops! There was an {status_code} Error", status=status_code)
+   except:
+      return text(f"Internal Server Error")
 
 @app.get("/")
 @app.ext.template("main.html")
