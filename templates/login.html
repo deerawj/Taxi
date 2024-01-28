@@ -1,0 +1,13 @@
+{{ error if error else "" }}
+<form action="/login" method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+
+    <select name="category" required>
+        {# Order important: the default choice should be passenger #}
+        <option value="passenger">Passenger</option>
+        <option value="driver">Driver</option>
+    </select>
+
+    <input type="submit" value="Join">
+</form>

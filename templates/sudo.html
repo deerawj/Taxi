@@ -1,0 +1,26 @@
+<span>{{ "message: " + message if message else "" }}</span>
+<br>
+
+<form method="POST">
+    <input type="text" name="username" placeholder="username">
+    <input type="password" name="password" placeholder="password">
+    <input type="text" name="roles" placeholder="roles">
+    <input type="submit" value="Add">
+</form>
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Hash (portion)</th>
+        <th>Roles</th>
+    </tr>
+    {% for item in data %}
+    <tr>
+        <td>{{ item.get('username') }}</td>
+        {# The passwords are hashed (NOT IN PLAINTEXT) #}
+        {# and Only a portion of the hashes are shown  #}
+        <td>`{{ item.get('password')[32:48] }}`</td>
+        <td>{{ item.get('roles') }}</td>
+    </tr>
+    {% endfor %}
+</table>

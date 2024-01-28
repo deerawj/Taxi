@@ -1,0 +1,15 @@
+{% if role == "dev" %}
+    <h1>Hello, developer {{ name }}!</h1>
+{% endif %}
+
+{% if role == "mod" %}
+    <h1>Hello, moderator {{ name }}!</h1>
+{% endif %}
+
+{% if role == "adm" %}
+    <h1>Hello, administrator {{ name }}!</h1>
+{% endif %}
+
+{% if role == "opt" %}
+    <h1>Hello, operator {{ name }}!</h1>
+{% endif %}
