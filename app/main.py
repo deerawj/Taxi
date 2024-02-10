@@ -305,7 +305,6 @@ async def login(request):
         rd.setex(token, 60 * 60 * 24, username)
 
         if category == "driver":
-            # TODO: redirect to driver page
             resp = redirect("/pick")
         else:
             resp = redirect("/reserve")
@@ -455,6 +454,42 @@ async def pick(request):
     db.reservations.update_one({"username": picked}, {"$set": {"picked": True, "picked_driver": user.get("username")}})
     return redirect("/busy")
     
+    
+# /busy page for the drivers to remind them that they are busy
+# if they are not busy, they should be redirected to /pick
+# they should also be given an option to finish the current trip
+@app.route("/busy", methods=["GET", "POST"])
+async def busy(request):
+    token = request.cookies.get("token")
+    user = rd.get(token)
+    if not user:
+        return redirect("/login")
+
+    user = user.decode()
+    user = db.users.find_one({"username": user})
+    
+    if user.get("category") != "driver":
+        raise SanicException("Only drivers can pickup passengers", status_code=401)
+    
+    reservation = db.reservations.find_one({"picked_driver": user.get("username"), "finished": False})
+    if not reservation:
+        return redirect("/pick")
+    
+    if request.method == "GET":
+        return html(f'''
+        You are currently busy with a {reservation['username']}<br>
+        <form method="POST" action="/busy">
+            <input type="submit" name="finish" value="finish">
+        </form>
+    ''')
+        
+    # check if the value is "finish"
+    print(request.form)
+    if request.form.get("finish") != "finish":
+        return redirect("/busy")
+    
+    db.reservations.update_one({"username": reservation['username']}, {"$set": {"finished": True}})
+    return redirect("/pick")
     
     
 

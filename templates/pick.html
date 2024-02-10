@@ -1,0 +1,29 @@
+<table>
+    <tr>
+        <th>Pick</th>
+        <th>Username</th>
+        <th>Current Address</th>
+        <th>Current Location</th>
+        <th>Destination Address</th>
+        <th>Destination Location</th>
+        <th>Departure Time</th>
+        <th>Minimum Rating</th>
+    </tr>
+    {% for reservation in data %}
+    <tr>
+        <td>
+            <form method="POST" action="/pick">
+                <input type="text" name="picked" value="{{ reservation['username'] }}">
+                <button type="submit">Pick</button>
+            </form>
+        </td>
+        <td>{{ reservation['username'] }}</td>
+        <td>{{ reservation['curr_adr'] }}</td>
+        <td>{{ reservation['curr_location'] }}</td>
+        <td>{{ reservation['dest_adr'] }}</td>
+        <td>{{ reservation['dest_location'] }}</td>
+        <td>{{ reservation['depature_time'] }}</td>
+        <td>{{ reservation['min_rating'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
