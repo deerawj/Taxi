@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
+    <title>Quick Join</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
 
@@ -15,14 +15,8 @@
             <p class="text-red-500 mb-4">{{ error }}</p>
         {% endif %}
 
-        <form action="/join" method="POST">
-            <input type="text" name="username" placeholder="Username" required
-                class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
-
-            <input type="password" name="password" placeholder="Password" required
-                class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
-
-            <input type="password" name="confirm_" placeholder="Confirm Password" required
+        <form action="/quick" method="POST">
+            <input type="email" name="email" placeholder="Email" required
                 class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
 
             <select name="category" required

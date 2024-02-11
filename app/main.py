@@ -1,5 +1,5 @@
 from sanic import Sanic, SanicException
-from sanic.response import text, file, html, redirect
+from sanic.response import text, file, html, json, redirect
 from sanic_ext import Extend
 
 from pymongo import MongoClient
@@ -242,6 +242,38 @@ async def sudo(request):
     return {"data": data, "message": "Admin added successfully"}
 
 
+def send_mail(to, message):
+    with open(f"temp/{to}_{random_token()}.txt", "w") as f:
+        f.write(f"to: {to}\n")
+        f.write(message)
+
+@app.route("quick", methods=["GET", "POST"])
+@app.ext.template("quick.html")
+async def quick(request):
+    if request.method == "GET":
+        return {"error": None}
+    
+    email = request.form.get("email")
+    category = request.form.get("category").lower()
+    
+    if category not in ["driver", "passenger"]:
+        return {"error": "Invalid user category"}
+    
+    username = random_token().lower()
+    password = random_token().lower()
+    
+    hasher = PasswordHasher()
+    hashed = hasher.hash(password)
+    
+    send_mail(email, f'please login with\n\tusername: {username}\n\tpassword: {password}\nto continue')
+    
+    db.users.insert_one(
+        {"username": username, "password": hashed, "category": category, "temp": True}
+    )
+    
+    return text("please check your email")
+    
+
 # join path for debugging
 # takes username, password (with confirmation) and type
 # type can be either "driver" or "passenger"
@@ -264,12 +296,15 @@ async def join(request):
 
     if category not in ["driver", "passenger"]:
         return {"error": "Invalid user category"}
-
+    
+    if db.users.find({"username": username, "temp": False}):
+        return "Username already there"
+    
     hasher = PasswordHasher()
     hashed = hasher.hash(password)
 
     db.users.insert_one(
-        {"username": username, "password": hashed, "category": category}
+        {"username": username, "password": hashed, "category": category, "temp": False}
     )
 
     return redirect("/login")
@@ -294,8 +329,10 @@ async def login(request):
         return {"error": "Invalid user category"}
 
     hasher = PasswordHasher()
-
     result = db.users.find_one({"username": username})
+    
+    if not result:
+        return {"error": "Username Not Found"}
 
     try:
         hasher.verify(result.get("password"), password)
@@ -316,6 +353,45 @@ async def login(request):
         # Invalid hashes should never be in the database
         # TODO: log this error with the username
         raise SanicException(None, status_code=500)
+    
+
+@app.route("/change")
+@app.ext.template("change.html")
+async def change(request):
+    token = request.cookie.get("token")
+    user = rd.get(token)
+    
+    if not user:
+        return redirect("/login")
+    
+    user = user.decode()
+    user = db.users.find_one({"username": user})
+    
+    username = request.form.get("username")
+    password = request.form.get("password")
+    confirm_ = request.form.get("confirm_")
+    
+    if not all([username, password, confirm_]):
+        return {"error": "All fields are required"}
+
+    if password != confirm_:
+        return {"error": "Passwords do not match"}
+    
+    hasher = PasswordHasher()
+    hashed = hasher.hash(password)
+    
+    db.users.update_one({"username": user})
+    
+    
+    
+@app.route("/users")
+async def list_users(request):
+    data = []
+    for i in db.users.find():
+        del i["_id"]
+        data.append(dict(i))
+        
+    return json(data)
     
     
 @app.route("/reserve", methods=["GET", "POST"])
@@ -451,7 +527,7 @@ async def pick(request):
         
     # TODO: verify rating
         
-    db.reservations.update_one({"username": picked}, {"$set": {"picked": True, "picked_driver": user.get("username")}})
+    db.reservations.update_one({"username": picked, "finished": False}, {"$set": {"picked": True, "picked_driver": user.get("username")}})
     return redirect("/busy")
     
     
@@ -476,8 +552,9 @@ async def busy(request):
         return redirect("/pick")
     
     if request.method == "GET":
-        return html(f'''
-        You are currently busy with a {reservation['username']}<br>
+        return html(f'''ep ep 1
+                    
+        <p>You are currently busy with a {reservation['username']}</p>
         <form method="POST" action="/busy">
             <input type="submit" name="finish" value="finish">
         </form>
@@ -488,7 +565,7 @@ async def busy(request):
     if request.form.get("finish") != "finish":
         return redirect("/busy")
     
-    db.reservations.update_one({"username": reservation['username']}, {"$set": {"finished": True}})
+    db.reservations.update_one({"username": reservation['username'], "finished": False}, {"$set": {"finished": True}})
     return redirect("/pick")
     
     
@@ -500,6 +577,7 @@ async def list_reservations(request):
     table_html = "<table>"
     table_html += "<tr><th>Username</th><th>Current Address</th><th>Current Location</th><th>Destination Address</th><th>Destination Location</th><th>Departure Time</th><th>Minimum Rating</th></tr>"
     for reservation in data:
+        print(reservation)
         table_html += f"<tr><td>{reservation['username']}</td><td>{reservation['curr_adr']}</td><td>{reservation['curr_location']}</td><td>{reservation['dest_adr']}</td><td>{reservation['dest_location']}</td><td>{reservation['depature_time']}</td><td>{reservation['min_rating']}</td></tr>"
     table_html += "</table>"
     return html(table_html)

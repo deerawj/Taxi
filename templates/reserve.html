@@ -1,23 +1,52 @@
-{{ error if error else "" }}
-<form method="POST" action="/reserve">
-        <div>
-            <input type="text" id="curr_adr" name="curr_adr" placeholder="Current Address">
-            <input type="text" id="dest_adr" name="dest_adr" placeholder="Destination Address">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body class="bg-gray-100 p-8">
+
+    {% if error %}
+    <p class="text-red-500 mb-4">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/reserve" class="max-w-md mx-auto bg-white p-8 rounded shadow-md">
+        <div class="mb-4">
+            <input type="text" id="curr_adr" name="curr_adr" placeholder="Current Address"
+                class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            <input type="text" id="dest_adr" name="dest_adr" placeholder="Destination Address"
+                class="w-full mt-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
         </div>
-        <div>
-            <pre>
-                If you want to be more specific;
-                leave your addresses empty and fill in your coordinates.
-            </pre>
-            <input type="text" id="curr_lon" name="curr_lon" required placeholder="Current Longitude">
-            <input type="text" id="curr_lat" name="curr_lat" required placeholder="Current Latitude">
-            <br>
-            <input type="text" id="dest_lon" name="dest_lon" required placeholder="Destination Longitude">
-            <input type="text" id="dest_lat" name="dest_lat" required placeholder="Destination Latitude">
+
+        <details class="mb-4">
+            <summary class="cursor-pointer text-blue-500">More Specific Coordinates</summary>
+            <div class="flex flex-wrap">
+                <input type="text" id="curr_lon" name="curr_lon" placeholder="Current Longitude"
+                    class="w-full md:w-1/2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                <input type="text" id="curr_lat" name="curr_lat" placeholder="Current Latitude"
+                    class="w-full md:w-1/2 mt-2 md:mt-0 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                <input type="text" id="dest_lon" name="dest_lon" placeholder="Destination Longitude"
+                    class="w-full md:w-1/2 mt-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                <input type="text" id="dest_lat" name="dest_lat" placeholder="Destination Latitude"
+                    class="w-full md:w-1/2 mt-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            </div>
+        </details>
+
+        <div class="mb-4">
+            <label for="min_rating" class="block text-sm font-medium text-gray-700">Min Rating:</label>
+            <input type="number" id="min_rating" name="min_rating" min="0" max="5" step="0.1" required
+                class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
         </div>
-        
-        <label for="min_rating">Min Rating: </label>
-        <input type="number" id="min_rating" name="min_rating" min="0" max="5" step="0.1" required>
-        <br>
-        <button type="submit">Reserve</button>
+
+        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700 cursor-pointer">
+            Reserve
+        </button>
     </form>
+
+</body>
+
+</html>

@@ -1,26 +1,49 @@
-<span>{{ "message: " + message if message else "" }}</span>
-<br>
+<!DOCTYPE html>
+<html lang="en">
 
-<form method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="text" name="roles" placeholder="roles">
-    <input type="submit" value="Add">
-</form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudo Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
 
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Hash (portion)</th>
-        <th>Roles</th>
-    </tr>
-    {% for item in data %}
-    <tr>
-        <td>{{ item.get('username') }}</td>
-        {# The passwords are hashed (NOT IN PLAINTEXT) #}
-        {# and Only a portion of the hashes are shown  #}
-        <td>`{{ item.get('password')[32:48] }}`</td>
-        <td>{{ item.get('roles') }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<body class="bg-gray-100 p-8">
+
+    <span class="mb-4">{{ "Message: " + message if message else "" }}</span>
+    <br>
+
+    <form method="POST" class="mb-8">
+        <input type="text" name="username" placeholder="Username"
+            class="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+
+        <input type="password" name="password" placeholder="Password"
+            class="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+
+        <input type="text" name="roles" placeholder="Roles"
+            class="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+
+        <input type="submit" value="Add"
+            class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700 cursor-pointer">
+    </form>
+
+    <table class="w-full border-collapse border border-gray-300">
+        <tr class="bg-gray-200">
+            <th class="p-2">Username</th>
+            <th class="p-2">Hash (portion)</th>
+            <th class="p-2">Roles</th>
+        </tr>
+        {% for item in data %}
+        <tr class="border-b border-gray-300">
+            <td class="p-2">{{ item.get('username') }}</td>
+            {# The passwords are hashed (NOT IN PLAINTEXT) #}
+            {# and Only a portion of the hashes are shown  #}
+            <td class="p-2">`{{ item.get('password')[32:48] }}`</td>
+            <td class="p-2">{{ item.get('roles') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+
+</html>

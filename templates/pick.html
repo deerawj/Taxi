@@ -1,29 +1,47 @@
-<table>
-    <tr>
-        <th>Pick</th>
-        <th>Username</th>
-        <th>Current Address</th>
-        <th>Current Location</th>
-        <th>Destination Address</th>
-        <th>Destination Location</th>
-        <th>Departure Time</th>
-        <th>Minimum Rating</th>
-    </tr>
-    {% for reservation in data %}
-    <tr>
-        <td>
-            <form method="POST" action="/pick">
-                <input type="text" name="picked" value="{{ reservation['username'] }}">
-                <button type="submit">Pick</button>
-            </form>
-        </td>
-        <td>{{ reservation['username'] }}</td>
-        <td>{{ reservation['curr_adr'] }}</td>
-        <td>{{ reservation['curr_location'] }}</td>
-        <td>{{ reservation['dest_adr'] }}</td>
-        <td>{{ reservation['dest_location'] }}</td>
-        <td>{{ reservation['depature_time'] }}</td>
-        <td>{{ reservation['min_rating'] }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Picking System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body class="bg-gray-100 p-8">
+
+    <table class="w-full border-collapse border border-gray-300">
+        <tr class="bg-gray-200">
+            <th class="p-2">Pick</th>
+            <th class="p-2">Username</th>
+            <th class="p-2">Current Address</th>
+            <th class="p-2">Current Location</th>
+            <th class="p-2">Destination Address</th>
+            <th class="p-2">Destination Location</th>
+            <th class="p-2">Departure Time</th>
+            <th class="p-2">Minimum Rating</th>
+        </tr>
+        {% for reservation in data %}
+        <tr class="border-b border-gray-300">
+            <td class="p-2">
+                <form method="POST" action="/pick">
+                    <input type="text" name="picked" value="{{ reservation['username'] }}"
+                        class="border border-gray-300 p-1 rounded" hidden>
+                    <button type="submit"
+                        class="bg-blue-500 text-white p-1 rounded hover:bg-blue-700 cursor-pointer">Pick</button>
+                </form>
+            </td>
+            <td class="p-2">{{ reservation['username'] }}</td>
+            <td class="p-2">{{ reservation['curr_adr'] }}</td>
+            <td class="p-2">{{ reservation['curr_location'] }}</td>
+            <td class="p-2">{{ reservation['dest_adr'] }}</td>
+            <td class="p-2">{{ reservation['dest_location'] }}</td>
+            <td class="p-2">{{ reservation['depature_time'] }}</td>
+            <td class="p-2">{{ reservation['min_rating'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+
+</html>
